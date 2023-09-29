@@ -25,10 +25,10 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@v1.3.1
       - name: print-tags
         id: print-tags
-        if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}''}}
+        if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}'}}
         run: echo "v${{steps.package-version.outputs.current-version}}==${{steps.previoustag.outputs.tag}}"
       - name: Publishing datasync manager
-        if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}''}}
+        if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}'}}
         uses: JS-DevTools/npm-publish@v2.2.0
         id: npm-release
         with:
@@ -37,5 +37,5 @@ jobs:
         id: github-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}''}}
+        if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}'}}
         run:  gh release create v${{ steps.package-version.outputs.current-version }} --title "Release ${{ steps.package-version.outputs.current-version }}" --generate-notes
