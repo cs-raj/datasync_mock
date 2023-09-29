@@ -25,7 +25,8 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@v1.3.1
       - name: print-tags
         id: print-tags
-        run: echo "${{steps.package-version.outputs.current-version}} ${{steps.previoustag.outputs.tag}}"
+        if: ${{steps.package-version.outputs.current-version}}==${{steps.previoustag.outputs.tag}}
+        run: echo "THis is the place"
       - name: Publishing datasync manager
         uses: JS-DevTools/npm-publish@v2.2.0
         with:
