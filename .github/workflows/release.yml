@@ -32,9 +32,9 @@ jobs:
       - name: Installing dependencies
         run: npm install
       - name: Build
-        run: npm run build-ts
+        run: npm run build-ts echo ${{env.FIRST_RELEASE}}
       - name: Publishing datasync manager
-        if: ${{env.FIRST_RELEASE}}
         uses: JS-DevTools/npm-publish@v2.2.0
+        if: ${{env.FIRST_RELEASE}}
         with:
           token: ${{ secrets.NPM_TOKEN }}
