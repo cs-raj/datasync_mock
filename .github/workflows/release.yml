@@ -19,7 +19,10 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
       - name: print-tag
-        run: echo ${{steps.tag_version.outputs.previous_tag==steps.package-version.outputs.current-version}}
+        if: ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}}
+        run: echo ${{steps.package-version.outputs.current-version}}
+        # if: 
+        # run: echo ${{steps.tag_version.outputs.previous_tag==steps.package-version.outputs.current-version}} echo ${{steps.package-version.outputs.current-version}}
       - uses: dev-drprasad/delete-tag-and-release@v1.0 # PRERELEASE is v1.0 and can also be used to test and give us feedback
         with:
           tag_name: ${{steps.tag_version.outputs.new_tag}} #(required) tag name to delete 
