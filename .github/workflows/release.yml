@@ -2,6 +2,8 @@ name: Release datasync manager
 on:
   push:
     branches: [main]
+env:
+  FIRST_RELEASE: false
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,19 +21,20 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
       - name: print-tag
-        if: ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}}
+        if: ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}} || ${{steps.tag_version.outputs.new_tag==steps.tag_version.outputs.current_version}}
         run: echo ${{steps.package-version.outputs.current-version}}
-        # if: 
-        # run: echo ${{steps.tag_version.outputs.previous_tag==steps.package-version.outputs.current-version}} echo ${{steps.package-version.outputs.current-version}}
+        env:
+          FIRST_RELEASE: true
       - uses: dev-drprasad/delete-tag-and-release@v1.0 # PRERELEASE is v1.0 and can also be used to test and give us feedback
         with:
           tag_name: ${{steps.tag_version.outputs.new_tag}} #(required) tag name to delete 
           github_token: ${{ secrets.GITHUB_TOKEN }} # (required) a GitHub token with write access to the repo that needs to be modified
-      # - name: Installing dependencies
-      #   run: npm install
-      # - name: Build
-      #   run: npm run build-ts
-      # - name: Publishing datasync manager
-      #   uses: JS-DevTools/npm-publish@v2.2.0
-      #   with:
-      #     token: ${{ secrets.NPM_TOKEN }}
+      - name: Installing dependencies
+        run: npm install
+      - name: Build
+        run: npm run build-ts
+      - name: Publishing datasync manager
+        if: ${{FIRST_RELEASE}}
+        uses: JS-DevTools/npm-publish@v2.2.0
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
