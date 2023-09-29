@@ -13,6 +13,7 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ env.RELEASE_VERSION }}
+          echo ${{GITHUB_REF}}
       - uses: actions/setup-node@v3.7.0
         with:
           node-version: "18.x"
