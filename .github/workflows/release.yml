@@ -19,13 +19,13 @@ jobs:
         uses: "WyriHaximus/github-action-get-previous-tag@master"
         with:
           prefix: 'v'
-          fallback: 2.0.4
+          fallback: 'v2.0.4'
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
       - name: print-tags
         id: print-tags
-        if: ${{steps.package-version.outputs.current-version}}==${{steps.previoustag.outputs.tag}}
+        if: (v${{steps.package-version.outputs.current-version}}==${{steps.previoustag.outputs.tag}})
         run: echo "THis is the place"
       - name: Publishing datasync manager
         uses: JS-DevTools/npm-publish@v2.2.0
