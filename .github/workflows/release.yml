@@ -25,8 +25,8 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@v1.3.1
       - name: print-tags
         id: print-tags
-        if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}'}}
-        run: echo 'v${{steps.package-version.outputs.current-version}}'
+        if: ${{ '${{steps.package-version.outputs.current-version}}' != '${{{steps.previoustag.outputs.tag:1}}}'}}
+        run: echo '${{{steps.previoustag.outputs.tag:1}}}'
       - name: Publishing datasync manager
         if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}'}}
         uses: JS-DevTools/npm-publish@v2.2.0
