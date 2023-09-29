@@ -34,7 +34,7 @@ jobs:
       - name: Build
         run: npm run build-ts
       - name: Publishing datasync manager
-        if: ${{FIRST_RELEASE}}
+        if: $FIRST_RELEASE
         uses: JS-DevTools/npm-publish@v2.2.0
         with:
           token: ${{ secrets.NPM_TOKEN }}
