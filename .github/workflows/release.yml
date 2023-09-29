@@ -18,7 +18,7 @@ jobs:
         id: previoustag
         uses: "WyriHaximus/github-action-get-previous-tag@master"
         with:
-          prefix: 'v'
+          prefix: v
           fallback: 'v2.0.5'
       - name: get-npm-version
         id: package-version
