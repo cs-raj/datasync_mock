@@ -25,17 +25,17 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@v1.3.1
       - name: print-tags
         id: print-tags
-        if: ${{ '${{steps.package-version.outputs.current-version}}' != '${'${{{steps.previoustag.outputs.tag:1}}}'}'}}
-        run: echo '${{steps.package-version.outputs.current-version}}'
-      - name: Publishing datasync manager
-        if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}'}}
-        uses: JS-DevTools/npm-publish@v2.2.0
-        id: npm-release
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-      - name: github-release
-        id: github-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}'}}
-        run:  gh release create --verify-tag v${{ steps.package-version.outputs.current-version }} --title "Release ${{ steps.package-version.outputs.current-version }}" --generate-notes
+        if: ${{ '${{steps.package-version.outputs.current-version}}' != '${{{steps.previoustag.outputs.tag:1}}}'}}
+        run: echo ${{steps.package-version.outputs.current-version}}
+      # - name: Publishing datasync manager
+      #   if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}'}}
+      #   uses: JS-DevTools/npm-publish@v2.2.0
+      #   id: npm-release
+      #   with:
+      #     token: ${{ secrets.NPM_TOKEN }}
+      # - name: github-release
+      #   id: github-release
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   if: ${{ 'v${{steps.package-version.outputs.current-version}}' != '${{steps.previoustag.outputs.tag}}'}}
+      #   run:  gh release create --verify-tag v${{ steps.package-version.outputs.current-version }} --title "Release ${{ steps.package-version.outputs.current-version }}" --generate-notes
