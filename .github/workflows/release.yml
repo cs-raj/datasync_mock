@@ -19,7 +19,7 @@ jobs:
         uses: "WyriHaximus/github-action-get-previous-tag@master"
         with:
           prefix: 'v'
-          fallback: v2.0.4
+          fallback: 'v2.0.4'
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
