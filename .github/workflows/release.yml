@@ -42,7 +42,6 @@ jobs:
           ov: ${{steps.tag_version.outputs.previous_tag}}
           nv: v${{steps.package-version.outputs.current-version}}
         run: |
-          echo ${{${ov}==${nv}}}
           echo ${ov}
           echo ${nv}
           if ${First_Release_2} == true; then
