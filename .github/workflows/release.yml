@@ -44,7 +44,7 @@ jobs:
         run: |
           echo ${ov}
           echo ${nv}
-          echo ${ov}==${nv}
+          echo ${{ov==nv}}
           if ${First_Release_2} == true; then
             echo "fr=true" >> $GITHUB_ENV
             echo "flag set to true"
