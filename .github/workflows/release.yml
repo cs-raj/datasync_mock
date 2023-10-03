@@ -47,16 +47,6 @@ jobs:
             echo "fr=false" >> $GITHUB_ENV
             echo "flag set to false"
           fi
-      - name: "Use flag if true"
-        if: ${{env.fr}}
-        run: echo ${{env.fr}}
-      - name: check-first-release
-        if: ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}}
-        run: echo ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}}
-        env:
-          FIRST_RELEASE: true
-      - name: print-tag
-        run: echo ${{env.fr}}
 # The package automatically bumps version and create a release tag soo deleting it 
 # We add it when the release is created
       - uses: dev-drprasad/delete-tag-and-release@v1.0 # PRERELEASE is v1.0 and can also be used to test and give us feedback
@@ -72,12 +62,12 @@ jobs:
       - name: Publishing datasync manager
         id: publish-core
         uses: JS-DevTools/npm-publish@v2.2.0
-        if: ${{env.FIRST_RELEASE=='true'}}
+        if: ${{env.fr=='true'}}
         with:
           token: ${{ secrets.NPM_TOKEN }}
       - name: Create Release
         id: create_release
-        if: ${{env.FIRST_RELEASE=='true'}}
+        if: ${{env.fr=='true'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release create v${{ steps.publish-core.outputs.version }} --title "Release ${{ steps.publish-core.outputs.version }}" --generate-notes
