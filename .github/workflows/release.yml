@@ -33,7 +33,7 @@ jobs:
           FIRST_RELEASE: true
       - name: check-first-release
         if: ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}}
-        run: echo ${{steps.package-version.outputs.current-version}}
+        run: echo ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}}
         env:
           FIRST_RELEASE: true
 # The package automatically bumps version and create a release tag soo deleting it 
@@ -49,12 +49,12 @@ jobs:
       - name: Publishing datasync manager
         id: publish-core
         uses: JS-DevTools/npm-publish@v2.2.0
-        if: ${{env.FIRST_RELEASE=='true'}}
+        if: ${{env.FIRST_RELEASE==true}}
         with:
           token: ${{ secrets.NPM_TOKEN }}
       - name: Create Release
         id: create_release
-        if: ${{env.FIRST_RELEASE=='true'}}
+        if: ${{env.FIRST_RELEASE==true}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release create v${{ steps.publish-core.outputs.version }} --title "Release ${{ steps.publish-core.outputs.version }}" --generate-notes
