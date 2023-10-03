@@ -37,7 +37,7 @@ jobs:
           fi
       - name: "Use flag if true"
         if: ${env.fr}==true
-        run: echo ${env.fr}==true
+        run: echo ${{env.fr}}
       - name: check-first-release
         if: ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}}
         run: echo ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}}
