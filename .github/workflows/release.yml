@@ -33,8 +33,19 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build-ts
+      - name: dtmkc
+        if: ${{env.FIRST_RELEASE==false}}
+        run: echo ${{env.FIRST_RELEASE}}
       - name: Publishing datasync manager
+        id: publish-core
         uses: JS-DevTools/npm-publish@v2.2.0
         if: ${{env.FIRST_RELEASE}}
         with:
           token: ${{ secrets.NPM_TOKEN }}
+      - name: Create Release
+        id: create_release
+        if: ${{env.FIRST_RELEASE==false}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create v${{ steps.publish-core.outputs.version }} --title "Release ${{ steps.publish-core.outputs.version }}" --generate-notes
+
