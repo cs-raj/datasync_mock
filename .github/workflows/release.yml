@@ -24,9 +24,9 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
 # Here we are checking whether this is the first release or not and then checking if it is release or not
-      - name: check-release-version
+      - name: check-first-release
         env:
-          First_Release: ${{steps.tag_version.outputs.previous_tag!='v0.0.0'}}
+          First_Release: ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}}
         run: |
           if ${First_Release} == true; then
             echo "fr=true" >> $GITHUB_ENV
@@ -35,8 +35,18 @@ jobs:
             echo "fr=false" >> $GITHUB_ENV
             echo "flag set to false"
           fi
-      - name: new_check
-        run: echo "fr=true" >> $GITHUB_ENV
+      - name: check-release-version
+        if: ${{env.fr=='false'}}
+        env:
+          First_Release_2: ${{steps.tag_version.outputs.previous_tag!='v0.0.0'}} && ${{steps.tag_version.outputs.previous_tag!=steps.package-version.outputs.current_version}}
+        run: |
+          if ${First_Release_2} == true; then
+            echo "fr=true" >> $GITHUB_ENV
+            echo "flag set to true"
+          else
+            echo "fr=false" >> $GITHUB_ENV
+            echo "flag set to false"
+          fi
       - name: "Use flag if true"
         if: ${{env.fr}}
         run: echo ${{env.fr}}
@@ -46,7 +56,7 @@ jobs:
         env:
           FIRST_RELEASE: true
       - name: print-tag
-        run: echo ${{env.fr=='true'}}
+        run: echo ${{env.fr}}
 # The package automatically bumps version and create a release tag soo deleting it 
 # We add it when the release is created
       - uses: dev-drprasad/delete-tag-and-release@v1.0 # PRERELEASE is v1.0 and can also be used to test and give us feedback
