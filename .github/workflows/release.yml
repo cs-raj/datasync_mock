@@ -34,7 +34,7 @@ jobs:
       - name: Build
         run: npm run build-ts
       - name: dtmkc
-        if: ${{env.FIRST_RELEASE!=false}}
+        if: ${{env.FIRST_RELEASE!='false'}}
         run: echo ${{env.FIRST_RELEASE}}
       - name: Publishing datasync manager
         id: publish-core
