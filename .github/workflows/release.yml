@@ -39,10 +39,12 @@ jobs:
         if: ${{env.fr=='false'}}
         env:
           First_Release_2: ${{'${{steps.tag_version.outputs.previous_tag}}'=='v${{steps.package-version.outputs.current-version}}'}}
+          ov: ${{steps.tag_version.outputs.previous_tag}}
+          nv: v${{steps.package-version.outputs.current-version}}
         run: |
-          echo ${{'${{steps.tag_version.outputs.previous_tag}}'=='v${{steps.package-version.outputs.current-version}}'}}
-          echo '${{steps.tag_version.outputs.previous_tag}}'
-          echo 'v${{steps.package-version.outputs.current-version}}'
+          echo ${{ov==nv}}
+          echo ${ov}
+          echo ${nv}
           if ${First_Release_2} == true; then
             echo "fr=true" >> $GITHUB_ENV
             echo "flag set to true"
