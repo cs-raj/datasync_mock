@@ -35,6 +35,8 @@ jobs:
             echo "fr=false" >> $GITHUB_ENV
             echo "flag set to false"
           fi
+      - name: new_check
+        run: echo "fr=true" >> $GITHUB_ENV
       - name: "Use flag if true"
         if: ${{env.fr}}
         run: echo ${{env.fr}}
