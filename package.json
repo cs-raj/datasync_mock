@@ -1,7 +1,7 @@
 {
-  "name": "rk_relase_6",
+  "name": "rk_relase_8",
   "author": "Contentstack LLC <support@contentstack.com>",
-  "version": "0.0.3",
+  "version": "0.0.0",
   "description": "The primary module of Contentstack DataSync. Syncs Contentstack data with your server using Contentstack Sync API",
   "main": "dist/index.js",
   "dependencies": {
