@@ -45,7 +45,7 @@ jobs:
           echo ${ov}
           echo ${nv}
           echo ${{env.ov==env.nv}}
-          if ${First_Release_2} == true; then
+          if ${{env.ov!=env.nv}}; then
             echo "fr=true" >> $GITHUB_ENV
             echo "flag set to true"
           else
