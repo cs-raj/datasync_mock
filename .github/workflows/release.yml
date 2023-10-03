@@ -38,7 +38,7 @@ jobs:
       - name: check-release-version
         if: ${{env.fr=='false'}}
         env:
-          First_Release_2: ${{steps.tag_version.outputs.previous_tag!=steps.package-version.outputs.current-version}}
+          First_Release_2: ${{steps.tag_version.outputs.previous_tag!=v${{steps.package-version.outputs.current-version}}}}
         run: |
           echo ${{steps.tag_version.outputs.previous_tag!=steps.package-version.outputs.current-version}}
           echo ${{steps.tag_version.outputs.previous_tag}}
