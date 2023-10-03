@@ -34,7 +34,7 @@ jobs:
       - name: Build
         run: npm run build-ts
       - name: dtmkc
-        if: ${{env.FIRST_RELEASE==false}}
+        if: ${{env.FIRST_RELEASE!=false}}
         run: echo ${{env.FIRST_RELEASE}}
       - name: Publishing datasync manager
         id: publish-core
@@ -44,7 +44,7 @@ jobs:
           token: ${{ secrets.NPM_TOKEN }}
       - name: Create Release
         id: create_release
-        if: ${{env.FIRST_RELEASE==false}}
+        if: ${{env.FIRST_RELEASE!=false}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release create v${{ steps.publish-core.outputs.version }} --title "Release ${{ steps.publish-core.outputs.version }}" --generate-notes
