@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
 env:
-  FIRST_RELEASE: 'false'
+  FIRST_RELEASE: false
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,12 +30,14 @@ jobs:
         if: ${{steps.tag_version.outputs.previous_tag!='v0.0.0'}} && ${{steps.tag_version.outputs.previous_tag!=steps.package-version.outputs.current_version}}
         run: echo ${{steps.package-version.outputs.current-version}}
         env:
-          FIRST_RELEASE: 'true'
+          FIRST_RELEASE: true
       - name: check-first-release
         if: ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}}
         run: echo ${{steps.tag_version.outputs.previous_tag=='v0.0.0'}}
         env:
-          FIRST_RELEASE: 'true'
+          FIRST_RELEASE: true
+      - name: print-tag
+        run: echo ${{env.FIRST_RELEASE}}
 # The package automatically bumps version and create a release tag soo deleting it 
 # We add it when the release is created
       - uses: dev-drprasad/delete-tag-and-release@v1.0 # PRERELEASE is v1.0 and can also be used to test and give us feedback
